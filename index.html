@@ -8,19 +8,56 @@
     <title>Rock - Paper - Scissors</title>
   </head>
   <body>
-    <div class="buttons">
-      <button class="button" value="rock">Rock</button>
-      <button class="button" value="paper">Paper</button>
-      <button class="button" value="scissors">Scissors</button>
-    </div>
-    <div class="scores">
-      <h2>Score</h2>
-      <p id="player-score">Player: 0</p>
-      <p id="computer-score">Computer: 0</p>
-      <p id="result"></p>
-      <button class="button-again">Again?</button>
+    <div class="content">
+      <div class="buttons">
+        <img class="button" id="rock" src="images/rock.png" value="rock"/>
+        <img class="button" id="paper" src="images/paper.png" value="paper"/>
+        <img class="button" id="scissors" src="images/scissors.png" value="scissors"/>
+  
+        <!-- <button class="button" value="rock">Rock</button>
+        <button class="button" value="paper">Paper</button>
+        <button class="button" value="scissors">Scissors</button> -->
+      </div>
+      <div class="scores">
+        <!-- <h2>Score</h2> -->
+        <div class="score">
+          <div id="player-score">
+            Player: 0
+          </div>
+          <img class="image" id="player-image" src=""/>
+        </div>
+        <div class="box hingebox">
+          <p id="result-show" class="" >You win!</p>
+        </div>
+        <div class="score">
+          <div id="computer-score">
+            Computer: 0
+          </div>
+          <img class="image" id="computer-image" src=""/>
+        </div>
+      </div>
+
+      <!-- <div class="message" active>
+        <p class="message">Would you like to try again?</p>
+        <button class="button-again">Again?</button>
+      </div> -->
+
+      <div class="md-modal md-effect-12">
+          <div class="md-content">
+              <div>
+                  <p id=result></p>
+                  <p>Would you like to play again?</p>
+                  <button class="md-close">Again?</button>
+              </div>
+          </div>
+      </div>
+      
+      <div class="md-overlay"></div>
+  
+
+
       <script src="script.js"></script>
+
     </div>
-    
   </body>
 </html>

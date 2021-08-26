@@ -9,8 +9,8 @@ const computerPlay = () => {
 };
 
 const playRound = (playerSelection, computerSelection) => {
-  playerSelection = playerSelection.toLowerCase();
   if (playerSelection == computerSelection) {
+    addResult("tie");
     return;
   }
   if (
@@ -19,17 +19,19 @@ const playRound = (playerSelection, computerSelection) => {
     (playerSelection == "scissors" && computerSelection == "paper")
   ) {
     playerScore += 1;
+    addResult("win");
     if (playerScore == 5) {
-      result = "Player Win";
-      disableButton();
-      buttonAgain.style.visibility = "visible"
+      result = "You Beat Computer";
+      md.classList.add("md-show");
+      // buttonAgain.style.visibility = "visible";
     }
   } else {
     computerScore += 1;
+    addResult("lose");
     if (computerScore == 5) {
-      result = "Computer Win";
-      disableButton();
-      buttonAgain.style.visibility = "visible"
+      result = "Computer Beat You";
+      md.classList.add("md-show");
+      // buttonAgain.style.visibility = "visible";
     }
   }
 
@@ -37,8 +39,15 @@ const playRound = (playerSelection, computerSelection) => {
 };
 
 const game = (player) => {
-  playerSelection = player.value;
+  playerSelection = player.getAttribute("value");
   computerSelection = computerPlay();
+  document.querySelector("#player-image").src = `images/${playerSelection}.png`;
+  document.querySelector(
+    "#computer-image"
+  ).src = `images/${computerSelection}.png`;
+  image[0].style.visibility = "visible";
+  image[1].style.visibility = "visible";
+
   const result = playRound(playerSelection, computerSelection);
   addScore(playerScore, computerScore);
 };
@@ -51,27 +60,35 @@ const addScore = (playerScore, computerScore) => {
 };
 
 const resetGame = () => {
+  md.classList.remove("md-show");
+  resultShow.style.visibility = "hidden";
+  image[0].style.visibility = "hidden";
+  image[1].style.visibility = "hidden";
   playerScore = 0;
   computerScore = 0;
   result = "";
   document.querySelector("#player-score").innerHTML = `Player: 0`;
   document.querySelector("#computer-score").innerHTML = `Computer: 0`;
   document.querySelector("#result").innerHTML = result;
-  enableButton()
 };
 
-const disableButton = () => {
-  buttons.forEach((button) => {
-    button.disabled = true;
-  });
+const addResult = (result) => {
+  resultShow.style.visibility = "visible";
+  switch (result) {
+    case "win":
+      resultShow.innerHTML = "You win!";
+      resultShow.className = `text animated wobble`;
+      return;
+    case "lose":
+      resultShow.innerHTML = "You lost!";
+      resultShow.className = `text animated hinge`;
+      return;
+    case "tie":
+      resultShow.innerHTML = "Tie game!";
+      resultShow.className = `text animated pulse`;
+      return;
+  }
 };
-
-const enableButton = () => {
-    buttons.forEach((button) => {
-      button.disabled = false;
-    });
-  };
-  
 
 const buttons = document.querySelectorAll(".button");
 buttons.forEach((button) => {
@@ -80,8 +97,18 @@ buttons.forEach((button) => {
   };
 });
 
-const buttonAgain = document.querySelector(".button-again");
-buttonAgain.style.visibility = "hidden"
+const buttonAgain = document.querySelector(".md-close");
+const image = document.querySelectorAll(".image");
+const resultShow = document.querySelector("#result-show");
+
+image[0].style.visibility = "hidden";
+image[1].style.visibility = "hidden";
+
+// buttonAgain.style.visibility = "hidden";
+resultShow.style.visibility = "hidden";
+
 buttonAgain.onclick = () => {
-    resetGame()
-}
+  resetGame();
+};
+
+const md = document.querySelector(".md-modal");
